@@ -1,19 +1,31 @@
-// const randomArray = [16, 2, 4, 19, 12, 3, 14, 20];
-const randomArray = [16, 2, 4];
-const sortedArray = [];
+function merge(left, right) {
+    let arr = []
+    // Break out of loop if any one of the array gets empty
+    while (left.length && right.length) {
+        // Pick the smaller among the smallest element of left and right sub arrays 
+        if (left[0] < right[0]) {
+            arr.push(left.shift())  
+        } else {
+            arr.push(right.shift()) 
+        }
+    }
+    
+    // Concatenating the leftover elements
+    // (in case we didn't go through the entire left or right array)
+    return [ ...arr, ...left, ...right ]
+}
 
 function mergeSort(array) {
-    if (array.length < 2) {
-        console.log(sortedArray);
-        return sortedArray.push(array);
-    }
-    else {
-        const half = Math.ceil(array.length / 2);
-        const firstHalf = array.slice(0, half);
-        const secondHalf = array.slice(half);
-        mergeSort(firstHalf);
-        mergeSort(secondHalf);
-    }
-    console.log(sortedArray)
+  const half = array.length / 2
+  
+  // Base case
+  if(array.length < 2){
+    return array 
+  }
+  
+  const left = array.splice(0, half)
+  return merge(mergeSort(left),mergeSort(array))
 }
-mergeSort(randomArray);
+
+array = [4, 8, 7, 2, 11, 1, 3];
+console.log(mergeSort(array));
